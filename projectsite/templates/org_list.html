@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Organizations - PSUSphere{% endblock %}
+
+{% block content %}
+<h4 class="page-title">Home</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">List of Organizations</div>
+                <div class="card-category">Page Subtitle</div>
+            </div>
+            <div class="card-body">
+                <!-- Search and Add Organization Button Row -->
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-6">
+                        <form class="navbar-left navbar-form nav-search" action="" method="get">
+                            <div class="input-group">
+                                <input type="text" name="q" placeholder="Search ..." class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-search search-icon"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="{% url 'organization-add' %}" class="btn btn-success btn-rounded">Add Organization</a>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">College</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list %}
+                            <tr>
+                                <td>{{ object.name }}</td>
+                                <td>{{ object.college }}</td>
+                                <td>{{ object.description }}</td>
+                                <td>
+                                    <a href="{% url 'organization-update' object.id %}" class="text-primary mr-2">Edit</a>
+                                    <a href="{% url 'organization-delete' object.id %}" class="text-danger">Delete</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No organizations found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Footer -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <ul class="pagination pg-primary">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                        {% endif %}
+                        
+                        <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                        {% endif %}
+                    </ul>
+                    <span class="text-muted small">Showing {{ object_list|length }} entries</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
