@@ -13,6 +13,7 @@
 </head>
 <body>
     <div class="wrapper">
+        {% if user.is_authenticated %}
         <div class="main-header">
             <div class="logo-header">
                 <a href="{% url 'home' %}" class="logo">
@@ -105,9 +106,9 @@
                                     <div class="user-box">
                                         <div class="u-img"><img src="{% static 'img/profile.jpg' %}" alt="user"></div>
                                         <div class="u-text">
-                                            <span>{{ request.user.username }}</span>
-                                            <p class="text-muted">hello@themekita.com</p>
-                                            <a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                            <h4>{{ request.user.get_full_name|default:request.user.username }}</h4>
+                                            <p class="text-muted">{{ request.user.email }}</p>
+                                            <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                         </div>
                                     </div>
                                 </li>
@@ -118,7 +119,13 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                
+                                <form method="post" action="{% url 'account_logout' %}" style="margin: 0; padding: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger" style="border: none; background: none; width: 100%; text-align: left; cursor: pointer;">
+                                        <i class="fa fa-power-off"></i> Logout
+                                    </button>
+                                </form>
                             </ul>
                         </li>
                     </ul>
@@ -201,9 +208,10 @@
                 </ul>
             </div>
         </div>
+        {% endif %}
         
         <!-- MAIN PANEL CONTENT AREA -->
-        <div class="main-panel">
+        <div class="main-panel" {% if not user.is_authenticated %}style="width: 100%; float: none;"{% endif %}>
             <div class="content">
                 <div class="container-fluid">
                     {% block content %}
@@ -211,6 +219,7 @@
                     {% endblock %}
                 </div>
             </div>
+            {% if user.is_authenticated %}
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">
@@ -220,27 +229,7 @@
                     </div>              
                 </div>
             </footer>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdate" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">                                    
-                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-                    <p><b>We'll let you know when it's done</b></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 
