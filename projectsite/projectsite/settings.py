@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 ]
 
 
-SITE_ID = 2 
+SITE_ID = 1 
 
 
 AUTHENTICATION_BACKENDS = [
@@ -88,7 +88,6 @@ TEMPLATES = [
     },
 ]
 
-# ...
 # projectsite/settings.py
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -98,10 +97,9 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'github': {
         'SCOPE': ['user', 'user:email'],
+        'SCHEME': 'https',
     }
 }
-
-STATIC_URL = 'static/'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
