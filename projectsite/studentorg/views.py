@@ -1,3 +1,4 @@
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -15,11 +16,8 @@ from studentorg.forms import (
 )
 
 
-class HomePageView(LoginRequiredMixin, ListView):
-    model = Organization
-    context_object_name = 'home'
+class HomePageView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
-    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
