@@ -1,265 +1,247 @@
 {% extends "base_auth.html" %}
-{% load i18n %}
-{% load account socialaccount %}
+{% load static %}
+{% load socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}Login - PSUSphere{% endblock %}
 
 {% block content %}
 <style>
-  body {
-    background-color: #f4f6f9;
-  }
-  .login-card {
-    max-width: 900px;
-    margin: 3rem auto;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    background: #fff;
-    display: flex;
-    min-height: 540px;
-  }
-  .brand-panel {
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-    color: #ffffff;
-    padding: 3rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 45%;
-  }
-  .brand-icon {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  .brand-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  .brand-subtitle {
-    font-size: 1.1rem;
-    font-weight: 500;
-    opacity: 0.9;
-    margin-bottom: 1.5rem;
-  }
-  .brand-text {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    line-height: 1.5;
-  }
-  .form-panel {
-    padding: 3rem 2.5rem;
-    width: 55%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .form-header h2 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.25rem;
-  }
-  .form-header p {
-    color: #64748b;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
-  .social-btns {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .btn-social {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #fff;
-    color: #334155;
-    font-weight: 500;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-  .btn-social:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    color: #0f172a;
-  }
-  .divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-  }
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  .divider::before { margin-right: .75em; }
-  .divider::after { margin-left: .75em; }
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  .form-group label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #334155;
-    margin-bottom: 0.25rem;
-  }
-  .form-control-custom input {
-    width: 100%;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    transition: border-color 0.2s;
-  }
-  .form-control-custom input:focus {
-    outline: none;
-    border-color: #ea580c;
-    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
-  }
-  .remember-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.25rem;
-    font-size: 0.85rem;
-  }
-  .remember-row label {
-    color: #64748b;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .remember-row a {
-    color: #ea580c;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .remember-row a:hover {
-    color: #c2410c;
-  }
-  .btn-primary-custom {
-    width: 100%;
-    background: #f97316;
-    color: #fff;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-primary-custom:hover {
-    background: #ea580c;
-  }
-  .form-footer {
-    text-align: center;
-    margin-top: 1.25rem;
-    font-size: 0.875rem;
-    color: #64748b;
-  }
-  .form-footer a {
-    color: #ea580c;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .form-footer a:hover {
-    color: #c2410c;
-  }
+    body {
+        background-color: #f4f6f9;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        font-family: 'Nunito', sans-serif;
+    }
+    .auth-card {
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        max-width: 900px;
+        width: 100%;
+        background: #ffffff;
+        margin: 20px;
+    }
+    .auth-banner {
+        background: linear-gradient(135deg, #f26522 0%, #e04e10 100%);
+        color: white;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+    }
+    .auth-banner-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    .auth-banner h2 {
+        font-weight: 700;
+        margin-bottom: 8px;
+        font-size: 2rem;
+    }
+    .auth-banner p.subtitle {
+        font-size: 0.95rem;
+        font-weight: 600;
+        opacity: 0.9;
+        margin-bottom: 15px;
+    }
+    .auth-banner p.desc {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        line-height: 1.5;
+        max-width: 280px;
+    }
+    .auth-form-container {
+        padding: 40px;
+        box-sizing: border-box;
+    }
+    .auth-form-container h3 {
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+    }
+    .auth-form-container p.subtext {
+        color: #707070;
+        font-size: 0.875rem;
+        margin-bottom: 25px;
+    }
+    .social-btn {
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        color: #333333;
+        font-weight: 600;
+        font-size: 0.82rem;
+        padding: 10px 8px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        text-decoration: none !important;
+        width: 100%;
+        white-space: nowrap;
+    }
+    .social-btn:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        color: #1a1a1a;
+    }
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #a0aec0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin: 20px 0;
+    }
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .divider span {
+        padding: 0 10px;
+    }
+    .form-control {
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        border: 1px solid #e2e8f0;
+        background-color: #f8fafc;
+        width: 100%;
+    }
+    .form-control:focus {
+        background-color: #fff;
+        border-color: #f26522;
+        box-shadow: 0 0 0 3px rgba(242, 101, 34, 0.15);
+    }
+    .btn-submit {
+        background-color: #f26522;
+        border: none;
+        color: white;
+        font-weight: 700;
+        padding: 11px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+        width: 100%;
+    }
+    .btn-submit:hover {
+        background-color: #e04e10;
+        color: white;
+    }
+    .auth-footer-text {
+        font-size: 0.85rem;
+        color: #707070;
+    }
+    .auth-footer-text a {
+        color: #f26522;
+        font-weight: 700;
+        text-decoration: none;
+    }
+    .auth-footer-text a:hover {
+        text-decoration: underline;
+    }
 </style>
 
-<div class="container">
-  <div class="login-card">
-    <!-- Left Branding Panel -->
-    <div class="brand-panel">
-      <div class="brand-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-      </div>
-      <h1 class="brand-title">PSUSphere</h1>
-      <div class="brand-subtitle">Student Organization Portal</div>
-      <p class="brand-text">Connect with student organizations, discover opportunities, and stay connected with the PSUSphere community.</p>
+<div class="card auth-card border-0">
+    <div class="row no-gutters m-0" style="width: 100%;">
+        <!-- Left Side: Orange PSUSphere Banner -->
+        <div class="col-md-5 p-0">
+            <div class="auth-banner">
+                <div class="auth-banner-icon">
+                    <i class="la la-globe"></i>
+                </div>
+                <h2>PSUSphere</h2>
+                <p class="subtitle">Student Organization Portal</p>
+                <p class="desc">Connect with student organizations, discover opportunities, and stay connected with the PSUSphere community.</p>
+            </div>
+        </div>
+
+        <!-- Right Side: Login Form with Social Logins -->
+        <div class="col-md-7 p-0">
+            <div class="auth-form-container">
+                <h3>Welcome back!</h3>
+                <p class="subtext">Sign in to your PSUSphere account</p>
+
+                <!-- Social Authentication Buttons -->
+                <div class="row mx-0 mb-3" style="gap: 10px; flex-wrap: nowrap;">
+                    <div class="col p-0">
+                        <a href="{% provider_login_url 'google' %}" class="social-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3h3.88c2.27-2.09 3.665-5.17 3.665-9.12z"/>
+                                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/>
+                                <path fill="#FBBC05" d="M5.28 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.09z"/>
+                                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.09c.95-2.85 3.6-4.96 6.72-4.96z"/>
+                            </svg>
+                            Continue with Google
+                        </a>
+                    </div>
+                    <div class="col p-0">
+                        <a href="{% provider_login_url 'github' %}" class="social-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Standard Username/Password Form -->
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2" style="font-size: 0.85rem;">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group mb-3 text-left p-0">
+                        <label class="form-label font-weight-bold" style="font-size: 0.85rem;">Email or Username</label>
+                        <input type="text" name="login" class="form-control" placeholder="Enter your email or username" required id="id_login">
+                    </div>
+
+                    <div class="form-group mb-3 text-left p-0">
+                        <label class="form-label font-weight-bold" style="font-size: 0.85rem;">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter your password" required id="id_password">
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4" style="font-size: 0.85rem;">
+                        <div class="form-check p-0">
+                            <input type="checkbox" name="remember" id="id_remember">
+                            <label for="id_remember" class="form-check-label ml-1">Remember me</label>
+                        </div>
+                        <a href="{% url 'account_reset_password' %}" class="text-muted">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-submit">SIGN IN</button>
+                </form>
+
+                <div class="text-center mt-4 auth-footer-text">
+                    Don't have an account? <a href="{% url 'account_signup' %}">Create an account</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Right Form Panel -->
-    <div class="form-panel">
-      <div class="form-header">
-        <h2>Welcome back!</h2>
-        <p>Sign in to your PSUSphere account</p>
-      </div>
-
-      {% get_providers as socialaccount_providers %}
-      {% if socialaccount_providers %}
-      <div class="social-btns">
-        <a href="{% provider_login_url 'google' %}" class="btn-social">
-          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-          Google
-        </a>
-        <a href="{% provider_login_url 'github' %}" class="btn-social">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          GitHub
-        </a>
-      </div>
-      <div class="divider">OR</div>
-      {% endif %}
-
-      <form class="login" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="id_login">Username or Email</label>
-          <div class="form-control-custom">
-            <input type="text" name="login" placeholder="Username or Email" autofocus="autofocus" required id="id_login">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="id_password">Password</label>
-          <div class="form-control-custom">
-            <input type="password" name="password" placeholder="Password" required id="id_password">
-          </div>
-        </div>
-
-        <div class="remember-row">
-          <label for="id_remember">
-            <input type="checkbox" name="remember" id="id_remember"> Remember me
-          </label>
-          <a href="{% url 'account_reset_password' %}">Forgot password?</a>
-        </div>
-
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-
-        <button class="btn-primary-custom" type="submit">SIGN IN</button>
-      </form>
-
-      <div class="form-footer">
-        Don't have an account? <a href="{% url 'account_signup' %}">Create an account</a>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock %}

@@ -90,7 +90,17 @@ TEMPLATES = [
 ]
 
 # ...
+# projectsite/settings.py
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    },
+    'github': {
+        'SCOPE': ['user', 'user:email'],
+    }
+}
 
 STATIC_URL = 'static/'
 
